@@ -1,0 +1,16 @@
+# 您的账户信息配置，请确保您已经注册了【半亩塘】
+# 如未注册，请前往 https://wenzuo.net/admin/register 注册
+
+# 您的站点key
+key=
+# 您的手机号
+mobile=
+# 您的密码
+password=
+
+
+# 运行端口（默认:8080）
+port=8080
+
+# 是否缓存数据(有利于加快页面渲染)（默认:true）
+cache=true
