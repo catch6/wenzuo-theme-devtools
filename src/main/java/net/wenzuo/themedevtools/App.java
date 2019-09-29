@@ -75,6 +75,5 @@ public class App {
         return get(url, key, type);
     }
 
-
 }
 
