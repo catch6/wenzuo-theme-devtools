@@ -5,6 +5,7 @@ import com.jfinal.server.undertow.UndertowConfig;
 import com.jfinal.server.undertow.UndertowKit;
 import com.jfinal.server.undertow.UndertowServer;
 import io.undertow.Version;
+import net.wenzuo.themedevtools.jf.websocket.MyWebSocket;
 
 /**
  * @author Catch
@@ -18,7 +19,9 @@ public class WenzuoServer extends UndertowServer {
 	public static void start(String jfinalConfigClass, int port, boolean devMode) {
 		UndertowConfig undertowConfig = new UndertowConfig(jfinalConfigClass);
 		undertowConfig.setPort(port);
-		new WenzuoServer(undertowConfig).start();
+		new WenzuoServer(undertowConfig).configWeb(builder -> {
+			builder.addWebSocketEndpoint(MyWebSocket.class);
+		}).start();
 	}
 
 	@Override
