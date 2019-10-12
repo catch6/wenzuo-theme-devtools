@@ -1,0 +1,23 @@
+<script>
+  var socket;
+  if (window.WebSocket) {
+    socket = new WebSocket("ws://localhost:PORT/hmr.ws");
+    socket.onmessage = function (event) {
+      if (event.data === "reload") {
+        location.reload(true);
+      }
+    };
+  } else {
+    alert("Your browser does not support Websockets. (Use Chrome)");
+  }
+
+  function send(message) {
+    if (window.WebSocket) {
+      if (socket.readyState == WebSocket.OPEN) {
+        socket.send(message);
+      } else {
+        alert("The socket is not open.");
+      }
+    }
+  }
+</script>

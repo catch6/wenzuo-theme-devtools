@@ -4,8 +4,7 @@ import com.jfinal.config.*;
 import com.jfinal.json.MixedJsonFactory;
 import com.jfinal.template.Engine;
 import net.wenzuo.themedevtools.jf.directive.ArticleDirective;
-
-import java.io.File;
+import net.wenzuo.themedevtools.jf.directive.HmrDirective;
 
 /**
  * @author Catch
@@ -30,7 +29,7 @@ public class JFConfig extends JFinalConfig {
 //		me.setToClassPathSourceFactory();
 		me.setDevMode(true);
 		me.setDatePattern("yyyy-MM-dd HH:mm:ss");
-		me.addSharedFunction("autoReload.html");
+		me.addDirective("hmr", HmrDirective.class, true);
 		me.addDirective("article", ArticleDirective.class, true);
 
 

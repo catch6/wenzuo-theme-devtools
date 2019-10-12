@@ -18,16 +18,12 @@ public class ArticleDirective extends BaseDirective {
 	public void exec(Env env, Scope scope, Writer writer) {
 		int len = exprList.length();
 		if (len == 0) {
-			error(writer, "#articles(id|flag) 需要指定一个参数");
+			error(writer, "#article(id|flag) 需要指定一个参数");
 			return;
 		} else if (len == 1) {
 			String para1 = (String) exprList.getExpr(0).eval(scope);
 			Map article = null;
-			if (para1.length() == 24) {
-				article = App.get("/articleById", Kv.by("id", para1), "article", Map.class);
-			} else {
-				article = App.get("/articleByFlag", Kv.by("flag", para1), "article", Map.class);
-			}
+			article = App.get("/article", Kv.by("para", para1), "article", Map.class);
 			if (article == null) {
 				error(writer, "该文章不存在");
 				return;

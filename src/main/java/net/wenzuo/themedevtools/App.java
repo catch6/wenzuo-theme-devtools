@@ -11,12 +11,16 @@ import com.jfinal.server.undertow.UndertowServer;
 import com.jfinal.template.source.ClassPathSource;
 import net.wenzuo.themedevtools.jf.JFConfig;
 import net.wenzuo.themedevtools.jf.WenzuoServer;
+import net.wenzuo.themedevtools.watcher.ThemeWatcher;
 import org.jboss.logging.BasicLogger;
 import org.xnio._private.Messages_$logger;
 
+import javax.websocket.Session;
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,11 +39,12 @@ public class App {
 	public static String ownerId;
 	public static String siteId;
 	public static Map<String, Object> paraMap = new HashMap<>();
-
+	public static Set<Session> sessionSet = new HashSet<>();
 
 	public static void main(String[] args) {
 		Config.init();
 		WenzuoServer.start(JFConfig.class.getName(), PropKit.getInt("port"), false);
+		ThemeWatcher.watch();
 	}
 
 	/**

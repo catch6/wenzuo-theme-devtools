@@ -1,6 +1,7 @@
 package net.wenzuo.themedevtools.jf.websocket;
 
 import com.jfinal.kit.LogKit;
+import net.wenzuo.themedevtools.App;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -9,9 +10,8 @@ import javax.websocket.server.ServerEndpoint;
  * @author Catch
  * @date 2019-10-11 18:26
  */
-@ServerEndpoint("/autoReload.ws")
-public class MyWebSocket {
-	public Session session;
+@ServerEndpoint("/hmr.ws")
+public class HMRWebSocket {
 
 	@OnMessage
 	public void message(String message, Session session) {
@@ -25,18 +25,17 @@ public class MyWebSocket {
 	 */
 	@OnOpen
 	public void onOpen(Session session) {
-		this.session = session;
-		LogKit.info("====== onOpen:" + session.getId() + " ======");
-		WebSocketMapUtil.put(session.getId(), this);
+		System.out.println("open==" + session.getId());
+		App.sessionSet.add(session);
 	}
 
 	/**
 	 * 连接关闭后触发的方法
 	 */
 	@OnClose
-	public void onClose() {
-		WebSocketMapUtil.remove(session.getId());
-		LogKit.info("====== onClose:" + session.getId() + " ======");
+	public void onClose(Session session) {
+		System.out.println("close==" + session.getId());
+		App.sessionSet.remove(session);
 	}
 
 	/**
@@ -44,7 +43,7 @@ public class MyWebSocket {
 	 */
 	@OnError
 	public void onError(Session session, Throwable error) {
-		LogKit.info(session.getId() + "连接发生错误" + error.getMessage());
+		LogKit.info("热加载连接发生错误" + error.getMessage());
 		error.printStackTrace();
 	}
 }
