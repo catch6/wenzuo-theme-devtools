@@ -1,11 +1,11 @@
 package net.wenzuo.themedevtools.jf;
 
-import com.jfinal.config.JFinalConfig;
+import com.jfinal.kit.PropKit;
 import com.jfinal.server.undertow.UndertowConfig;
-import com.jfinal.server.undertow.UndertowKit;
 import com.jfinal.server.undertow.UndertowServer;
-import io.undertow.Version;
 import net.wenzuo.themedevtools.jf.websocket.HMRWebSocket;
+
+import java.io.File;
 
 /**
  * @author Catch
@@ -19,6 +19,8 @@ public class WenzuoServer extends UndertowServer {
 	public static void start(String jfinalConfigClass, int port, boolean devMode) {
 		UndertowConfig undertowConfig = new UndertowConfig(jfinalConfigClass);
 		undertowConfig.setPort(port);
+		System.out.print(new File(".").getAbsolutePath());
+		undertowConfig.setResourcePath("src/main/webapp, WebRoot, WebContent,theme");
 		new WenzuoServer(undertowConfig).configWeb(builder -> {
 			builder.addWebSocketEndpoint(HMRWebSocket.class);
 		}).start();
@@ -35,14 +37,15 @@ public class WenzuoServer extends UndertowServer {
 
 		try {
 			// System.out.println("Starting Undertow Server on port: " + config.getPort());
-			String msg = "Starting Wenzuo Theme Dev Tools..." + " -> http://" + config.getHost() + ":" + config.getPort();
-			if (config.isSslEnable()) {
-				msg = msg + ", https://" + config.getHost() + ":" + config.getSslConfig().getPort();
-			}
+			String msg = "Starting Wenzuo Theme Dev Tools...";
 			System.out.println(msg);
 			long start = System.currentTimeMillis();
 			doStart();
-			System.out.println("Starting Complete in " + getTimeSpent(start) + " seconds. Welcome (^_^)\n");
+			String http = " -> http://" + config.getHost() + ":" + config.getPort() + "/" + PropKit.get("key");
+			if (config.isSslEnable()) {
+				http = " -> https://" + config.getHost() + ":" + config.getSslConfig().getPort() + "/" + PropKit.get("key");
+			}
+			System.out.println("Starting Complete in " + getTimeSpent(start) + " seconds. Welcome to " + http);
 
 			/**
 			 * 使用 kill pid 命令或者 ctrl + c 关闭 JVM 时，调用 UndertowServer.stop() 方法，

@@ -17,7 +17,7 @@ import java.io.IOException;
  * @date 2019-10-12 10:18
  */
 public class HmrDirective extends Directive {
-	private static final String HMR = new ClassPathSource("hmr.html").getContent().toString().replace("PORT", PropKit.get("port"));
+	private static final String HMR = new ClassPathSource("hmr.html").getContent().toString();
 
 	@Override
 	public void exec(Env env, Scope scope, Writer writer) {

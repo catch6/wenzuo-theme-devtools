@@ -49,7 +49,6 @@ public class ThemeWatcher {
 	}
 
 	private static void update() {
-		System.out.println("reload");
 		App.sessionSet.forEach(session -> session.getAsyncRemote().sendText("reload"));
 	}
 }

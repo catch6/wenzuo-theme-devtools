@@ -25,7 +25,6 @@ public class HMRWebSocket {
 	 */
 	@OnOpen
 	public void onOpen(Session session) {
-		System.out.println("open==" + session.getId());
 		App.sessionSet.add(session);
 	}
 
@@ -34,7 +33,6 @@ public class HMRWebSocket {
 	 */
 	@OnClose
 	public void onClose(Session session) {
-		System.out.println("close==" + session.getId());
 		App.sessionSet.remove(session);
 	}
 

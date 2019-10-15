@@ -7,5 +7,6 @@ public class Const {
 	public static final String OWNER_KEY = "owner";
 	public static final String VISITOR_KEY = "visitor";
 	public static final String IS_OWNER_KEY = "isOwner";
+	public static final String ASSETS_KEY = "assets";
 
 }

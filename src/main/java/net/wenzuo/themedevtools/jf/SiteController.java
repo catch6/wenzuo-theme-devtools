@@ -26,8 +26,11 @@ public class SiteController extends Controller {
 		// 设置 isOwner
 		setAttr(Const.IS_OWNER_KEY, App.isOwner);
 
+		// 设置 assets 路径
+		setAttr(Const.ASSETS_KEY, "");
+
 		String view = attrs.length == 1 ? "index" : attrs[1];
-		view = "theme/" + view + ".html";
+		view = view + ".html";
 		render(view);
 	}
 

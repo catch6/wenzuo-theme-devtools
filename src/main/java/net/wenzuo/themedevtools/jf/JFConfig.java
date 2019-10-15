@@ -2,9 +2,9 @@ package net.wenzuo.themedevtools.jf;
 
 import com.jfinal.config.*;
 import com.jfinal.json.MixedJsonFactory;
+import com.jfinal.kit.PathKit;
 import com.jfinal.template.Engine;
-import net.wenzuo.themedevtools.jf.directive.ArticleDirective;
-import net.wenzuo.themedevtools.jf.directive.HmrDirective;
+import net.wenzuo.themedevtools.jf.directive.*;
 
 /**
  * @author Catch
@@ -26,12 +26,15 @@ public class JFConfig extends JFinalConfig {
 
 	@Override
 	public void configEngine(Engine me) {
-//		me.setToClassPathSourceFactory();
+		me.setBaseTemplatePath("theme");
 		me.setDevMode(true);
 		me.setDatePattern("yyyy-MM-dd HH:mm:ss");
 		me.addDirective("hmr", HmrDirective.class, true);
 		me.addDirective("article", ArticleDirective.class, true);
-
+		me.addDirective("articles", ArticlesDirective.class, true);
+		me.addDirective("categories", CategoriesDirective.class, true);
+		me.addDirective("tags", TagsDirective.class, true);
+		me.addDirective("Menus", MenusDirective.class, true);
 
 	}
 

@@ -1,7 +1,9 @@
 <script>
   var socket;
+  var origin = location.origin;
+  origin = origin.replace(location.protocol, "").replace("//", "");
   if (window.WebSocket) {
-    socket = new WebSocket("ws://localhost:PORT/hmr.ws");
+    socket = new WebSocket(`ws://${origin}/hmr.ws`);
     socket.onmessage = function (event) {
       if (event.data === "reload") {
         location.reload(true);
