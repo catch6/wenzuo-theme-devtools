@@ -70,8 +70,8 @@ public class App {
 		if (cache && cacheMap.containsKey(url)) {
 			return (T) cacheMap.get(url);
 		}
-//		String body = HttpUtil.get(PropKit.get("baseUrl", "https://wenzuo.net/api/devtools") + url, App.paraMap);
-		String body = HttpUtil.get(PropKit.get("baseUrl", "http://localhost:9090/api/devtools") + url, App.paraMap);
+		String body = HttpUtil.get(PropKit.get("serverUrl", "https://wenzuo.net/api/devtools") + url, App.paraMap);
+//		String body = HttpUtil.get(PropKit.get("baseUrl", "http://localhost:9090/api/devtools") + url, App.paraMap);
 		JSONObject obj = JSONUtil.parseObj(body);
 		if (obj.getInt("code") != 200) {
 			App.error(obj);
