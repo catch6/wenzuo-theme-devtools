@@ -19,7 +19,7 @@ public class WenzuoServer extends UndertowServer {
 	public static void start(String jfinalConfigClass, int port, boolean devMode) {
 		UndertowConfig undertowConfig = new UndertowConfig(jfinalConfigClass);
 		undertowConfig.setPort(port);
-		System.out.print(new File(".").getAbsolutePath());
+		undertowConfig.setDevMode(true);
 		undertowConfig.setResourcePath("src/main/webapp, WebRoot, WebContent,theme");
 		new WenzuoServer(undertowConfig).configWeb(builder -> {
 			builder.addWebSocketEndpoint(HMRWebSocket.class);
@@ -41,12 +41,12 @@ public class WenzuoServer extends UndertowServer {
 			System.out.println(msg);
 			long start = System.currentTimeMillis();
 			doStart();
-			String http = " -> http://" + config.getHost() + ":" + config.getPort() + "/" + PropKit.get("key");
+			String http = " -> http://localhost:" + config.getPort() + "/" + PropKit.get("key");
 			if (config.isSslEnable()) {
-				http = " -> https://" + config.getHost() + ":" + config.getSslConfig().getPort() + "/" + PropKit.get("key");
+				http = " -> https://localhost:" + config.getSslConfig().getPort() + "/" + PropKit.get("key");
 			}
 			System.out.println("Starting Complete in " + getTimeSpent(start) + " seconds. Welcome to " + http);
-
+			
 			/**
 			 * 使用 kill pid 命令或者 ctrl + c 关闭 JVM 时，调用 UndertowServer.stop() 方法，
 			 * 以便触发 JFinalConfig.onStop();
@@ -54,6 +54,7 @@ public class WenzuoServer extends UndertowServer {
 			 * 注意：下方代码严格测试过，只支持 kill pid 不支持 kill -9 pid
 			 */
 			Runtime.getRuntime().addShutdownHook(new Thread() {
+				@Override
 				public void run() {
 					WenzuoServer.this.stop();
 				}
