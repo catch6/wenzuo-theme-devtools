@@ -3,16 +3,25 @@ package net.wenzuo.themedevtools.jf;
 import com.jfinal.config.*;
 import com.jfinal.json.MixedJsonFactory;
 import com.jfinal.kit.PathKit;
+import com.jfinal.kit.Prop;
+import com.jfinal.kit.PropKit;
 import com.jfinal.template.Engine;
+import net.wenzuo.themedevtools.App;
+import net.wenzuo.themedevtools.Config;
 import net.wenzuo.themedevtools.jf.directive.*;
+import net.wenzuo.themedevtools.watcher.ThemeWatcher;
+
+import java.io.File;
 
 /**
  * @author Catch
  * @date 2019-10-11 16:02
  */
 public class JFConfig extends JFinalConfig {
+
 	@Override
 	public void configConstant(Constants me) {
+		PropKit.append(App.prop);
 		me.setJsonFactory(MixedJsonFactory.me());
 		me.setInjectDependency(true);
 		me.setJsonDatePattern("yyyy-MM-dd HH:mm:ss");
@@ -50,5 +59,11 @@ public class JFConfig extends JFinalConfig {
 	@Override
 	public void configHandler(Handlers me) {
 		me.add(new GlobalHandler());
+	}
+
+	@Override
+	public void onStart(){
+		Config.init();
+		ThemeWatcher.watch();
 	}
 }

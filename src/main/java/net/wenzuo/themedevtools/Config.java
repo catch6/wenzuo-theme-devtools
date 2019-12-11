@@ -1,10 +1,10 @@
 package net.wenzuo.themedevtools;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.log.dialect.console.ConsoleLog;
 import cn.hutool.log.level.Level;
 import com.jfinal.kit.Kv;
+import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.template.source.ClassPathSource;
@@ -20,8 +20,6 @@ public class Config {
 	public static void init() {
 		ConsoleLog.setLevel(Level.ERROR);
 		initConfig();
-		PropKit.use(new File("config.txt"))
-				.appendIfExists(new File("config.dev.txt"));
 		verifyConfig();
 		initStaticObjects();
 	}

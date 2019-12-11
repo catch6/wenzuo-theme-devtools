@@ -29,12 +29,12 @@ public class ErrorRender extends Render {
 
 	private static final String hmr = "<script> var socket; var origin = location.origin;origin = origin.replace(location.protocol, \"\").replace(\"//\", \"\"); if (window.WebSocket) { socket = new WebSocket(`ws://${origin}/hmr.ws`); socket.onmessage = function (event) { if (event.data === \"reload\") { location.reload(true); } }; } else { alert(\"Your browser does not support Websockets. (Use Chrome)\"); } function send(message) { if (window.WebSocket) { if (socket.readyState == WebSocket.OPEN) { socket.send(message); } else { alert(\"The socket is not open.\"); } } }</script>";
 
-	protected static final byte[] html404 = ("<html><meta charset=UTF-8><head><title>404 Not Found</title>" + hmr + "</head><body bgcolor='white'><center><h1>404 Not Found</h1></center></body></html>").getBytes();
-	protected static final byte[] html500 = ("<html><meta charset=UTF-8><head><title>500 Internal Server Error</title>" + hmr + "</head><body bgcolor='white'><center><h1>主题编译异常，请检查语法</h1></center></body></html>").getBytes();
+	protected static final byte[] html404 = ("<html><meta charset=\"UTF-8\"><head><title>404 Not Found</title>" + hmr + "</head><body bgcolor='white'><center><h1>404 Not Found</h1></center></body></html>").getBytes();
+	protected static final byte[] html500 = ("<html><meta charset=\"UTF-8\"><head><title>500 Internal Server Error</title>" + hmr + "</head><body bgcolor='white'><center><h1>主题编译异常，请检查语法</h1></center></body></html>").getBytes();
 
-	protected static final byte[] html400 = ("<html><meta charset=UTF-8><head><title>400 Bad Request</title>" + hmr + "</head><body bgcolor='white'><center><h1>400 Bad Request</h1></center></body></html>").getBytes();
-	protected static final byte[] html401 = ("<html><meta charset=UTF-8><head><title>401 Unauthorized</title>" + hmr + "</head><body bgcolor='white'><center><h1>401 Unauthorized</h1></center></body></html>").getBytes();
-	protected static final byte[] html403 = ("<html><meta charset=UTF-8><head><title>403 Forbidden</title>" + hmr + "</head><body bgcolor='white'><center><h1>403 Forbidden</h1></center></body></html>").getBytes();
+	protected static final byte[] html400 = ("<html><meta charset=\"UTF-8\"><head><title>400 Bad Request</title>" + hmr + "</head><body bgcolor='white'><center><h1>400 Bad Request</h1></center></body></html>").getBytes();
+	protected static final byte[] html401 = ("<html><meta charset=\"UTF-8\"><head><title>401 Unauthorized</title>" + hmr + "</head><body bgcolor='white'><center><h1>401 Unauthorized</h1></center></body></html>").getBytes();
+	protected static final byte[] html403 = ("<html><meta charset=\"UTF-8\"><head><title>403 Forbidden</title>" + hmr + "</head><body bgcolor='white'><center><h1>403 Forbidden</h1></center></body></html>").getBytes();
 
 	protected int errorCode;
 
@@ -80,7 +80,7 @@ public class ErrorRender extends Render {
 		if (errorCode == 403) {
 			return html403;
 		}
-		return ("<html><head><title>" + errorCode + " Error</title>" + hmr + "</head><body bgcolor='white'><center><h1>" + errorCode + " Error</h1></center></body></html>").getBytes();
+		return ("<html><head><meta charset=\"UTF-8\"><title>" + errorCode + " Error</title>" + hmr + "</head><body bgcolor='white'><center><h1>" + errorCode + " Error</h1></center></body></html>").getBytes();
 	}
 
 	public int getErrorCode() {

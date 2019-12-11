@@ -20,6 +20,8 @@ public class WenzuoServer extends UndertowServer {
 		UndertowConfig undertowConfig = new UndertowConfig(jfinalConfigClass);
 		undertowConfig.setPort(port);
 		undertowConfig.setDevMode(true);
+		undertowConfig.setIoThreads(2);
+		undertowConfig.setWorkerThreads(2);
 		undertowConfig.setResourcePath("src/main/webapp, WebRoot, WebContent,theme");
 		new WenzuoServer(undertowConfig).configWeb(builder -> {
 			builder.addWebSocketEndpoint(HMRWebSocket.class);
