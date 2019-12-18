@@ -24,7 +24,7 @@ public class JFConfig extends JFinalConfig {
 		PropKit.append(App.prop);
 		me.setJsonFactory(MixedJsonFactory.me());
 		me.setInjectDependency(true);
-		me.setJsonDatePattern("yyyy-MM-dd HH:mm:ss");
+		me.setJsonDatePattern(Const.DATE_PATTERN);
 		Engine.setFastMode(true);
 	}
 
@@ -37,7 +37,8 @@ public class JFConfig extends JFinalConfig {
 	public void configEngine(Engine me) {
 		me.setBaseTemplatePath("theme");
 		me.setDevMode(true);
-		me.setDatePattern("yyyy-MM-dd HH:mm:ss");
+		me.setToJdkEncoderFactory();
+		me.setDatePattern(Const.DATE_PATTERN);
 		me.addDirective("hmr", HmrDirective.class, true);
 		me.addDirective("article", ArticleDirective.class, true);
 		me.addDirective("articles", ArticlesDirective.class, true);
@@ -64,6 +65,8 @@ public class JFConfig extends JFinalConfig {
 	@Override
 	public void onStart(){
 		Config.init();
-		ThemeWatcher.watch();
+		if (PropKit.getBoolean("watch",true)){
+			ThemeWatcher.watch();
+		}
 	}
 }

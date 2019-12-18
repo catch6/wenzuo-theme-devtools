@@ -1,5 +1,6 @@
 package net.wenzuo.themedevtools;
 
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.lang.Singleton;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
@@ -28,22 +29,24 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class App {
     public static boolean cache;
-    public static String token;
     public static Map<String, Object> cacheMap = new HashMap<>();
     public static Map<String, Object> site = new HashMap<>();
-    public static Map<String, Object> owner = new HashMap<>();
-    public static boolean isOwner;
-    public static String ownerId;
-    public static String siteId;
+    public static Map<String, Object> master = new HashMap<>();
+    public static Map<String, Object> visitor = new HashMap<>();
+    public static boolean isMaster;
     public static Map<String, Object> paraMap = new HashMap<>();
     public static Set<Session> sessionSet = new HashSet<>();
+
     public static final Prop prop=PropKit.use(new File("config.txt"))
             .appendIfExists(new File("config.dev.txt"));
 
     public static void main(String[] args) {
+        System.setProperty("org.jboss.logging.provider", "jdk");
+        java.util.logging.Logger.getLogger("io.undertow").setLevel(java.util.logging.Level.OFF);
+        java.util.logging.Logger.getLogger("org.jboss").setLevel(java.util.logging.Level.OFF);
+        java.util.logging.Logger.getLogger("org.xnio").setLevel(java.util.logging.Level.OFF);
 		int port=PropKit.getInt("port",8080);
-        WenzuoServer.start(JFConfig.class.getName(), port, false);
-
+        WenzuoServer.start(port);
     }
 
     /**
@@ -70,8 +73,8 @@ public class App {
         if (cache && cacheMap.containsKey(url)) {
             return (T) cacheMap.get(url);
         }
-        String body = HttpUtil.get(PropKit.get("serverUrl", "http://t.wenzuo.net:8000/api/devtools") + url, App.paraMap);
-//		String body = HttpUtil.get(PropKit.get("baseUrl", "http://localhost:9090/api/devtools") + url, App.paraMap);
+        url=PropKit.get("serverUrl", "http://t.wenzuo.net:8000/api/devtools") + url;
+        String body = HttpUtil.post(url, App.paraMap);
         JSONObject obj = JSONUtil.parseObj(body);
         if (obj.getInt("code") != 200) {
             App.error(obj);

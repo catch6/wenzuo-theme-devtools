@@ -1,5 +1,6 @@
 package net.wenzuo.themedevtools.jf;
 
+import cn.hutool.core.util.StrUtil;
 import com.jfinal.core.Controller;
 import net.wenzuo.themedevtools.App;
 
@@ -15,22 +16,25 @@ public class SiteController extends Controller {
 	 * attribute 中 attrs 数组内容 ["站点key","view",...]
 	 */
 	public void index() {
-		String[] attrs = getAttr("attrs");
+		String[] attrs = getAttr(Const.ATTRS);
 
 		// 设置 site
-		setAttr(Const.SITE_KEY, App.site);
+		setAttr(Const.SITE, App.site);
 
-		// 设置 owner
-		setAttr(Const.OWNER_KEY, App.owner);
+		// 设置 master
+		setAttr(Const.MASTER, App.master);
 
-		// 设置 isOwner
-		setAttr(Const.IS_OWNER_KEY, App.isOwner);
+		// 设置 visitor
+		setAttr(Const.VISITOR, App.visitor);
+
+		// 设置 isMaster
+		setAttr(Const.IS_MASTER, App.isMaster);
 
 		// 设置 assets 路径
-		setAttr(Const.ASSETS_KEY, "");
+		setAttr(Const.ASSETS, StrUtil.EMPTY);
 
-		String view = attrs.length == 1 ? "index" : attrs[1];
-		view = view + ".html";
+		String view = attrs.length == 1 ? Const.INDEX : attrs[1];
+		view = view + Const.VIEW_SUFFIX;
 		render(view);
 	}
 

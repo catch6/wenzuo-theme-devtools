@@ -18,8 +18,7 @@ package com.jfinal.render;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-
-import com.jfinal.core.Const;
+import java.nio.charset.StandardCharsets;
 
 /**
  * ErrorRender.
@@ -27,7 +26,7 @@ import com.jfinal.core.Const;
 public class ErrorRender extends Render {
 
 	protected static final String contentType = "text/html; charset=" + getEncoding();
-	private static final Charset CHARSET=Charset.forName("UTF-8");
+	private static final Charset CHARSET= StandardCharsets.UTF_8;
 	
 	private static final String hmr = "<script> var socket; var origin = location.origin;origin = origin.replace(location.protocol, \"\").replace(\"//\", \"\"); if (window.WebSocket) { socket = new WebSocket(`ws://${origin}/hmr.ws`); socket.onmessage = function (event) { if (event.data === \"reload\") { location.reload(true); } }; } else { alert(\"Your browser does not support Websockets. (Use Chrome)\"); } function send(message) { if (window.WebSocket) { if (socket.readyState == WebSocket.OPEN) { socket.send(message); } else { alert(\"The socket is not open.\"); } } }</script>";
 

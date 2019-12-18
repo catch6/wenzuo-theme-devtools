@@ -1,13 +1,19 @@
 # 您的账户信息配置，请确保您已经注册了【半亩塘】
 # 如未注册，请前往 https://wenzuo.net/admin/register 注册
 
-# 您的站点key
+# 浏览的站点key
 key=
+
 # 您的手机号
 mobile=
 # 您的密码
 password=
 
+# 将当前用户强制设置为游客，(默认:false，根据当前用户自动判断)
+forceVisitor=true
+
+# 是否需要watch主题改动，自动刷新页面(默认:true)
+watch=true
 
 # 运行端口（默认:8080）
 port=8080

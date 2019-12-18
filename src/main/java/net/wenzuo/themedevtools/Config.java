@@ -50,19 +50,29 @@ public class Config {
 
 	private static void initStaticObjects() {
 		App.cache = PropKit.getBoolean("cache", true);
-		App.token = App.get("/login",
-				Kv.by("mobile", PropKit.get("mobile"))
-						.set("password", PropKit.get("password"))
-						.set("key", PropKit.get("key")),
-				"token",
-				String.class
+		String key=PropKit.get("key");
+		boolean forceVisitor=PropKit.getBoolean("forceVisitor",false);
+
+		String token = App.get("/login",
+			Kv.by("mobile", PropKit.get("mobile"))
+				.set("password", PropKit.get("password"))
+				.set("key", PropKit.get("key")),
+			"token",
+			String.class
 		);
-		App.paraMap.put("token", App.token);
-		App.isOwner = PropKit.getBoolean("isOwner", false);
-		App.owner = App.get("/user", "user", App.owner.getClass());
+
+		// App.paraMap 在后续请求中将一直携带该参数
+		App.paraMap.put("token", token);
+		App.paraMap.put("key", key);
+		App.paraMap.put("forceVisitor", forceVisitor);
+
 		App.site = App.get("/site", "site", App.site.getClass());
-		App.ownerId = (String) App.owner.get("id");
-		App.siteId = (String) App.site.get("id");
+		App.visitor= App.get("/visitor", "visitor", App.visitor.getClass());
+		App.master= App.get("/master", "master", App.master.getClass());
+		App.isMaster = App.master.get("id").equals(App.visitor.get("id"));
+		if (forceVisitor){
+			App.isMaster=false;
+		}
 	}
 
 }

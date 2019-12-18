@@ -25,11 +25,7 @@ public class ArticleDirective extends BaseDirective {
 			Map article = null;
 			article = App.get("/article", Kv.by("para", para1), "article", Map.class);
 			if (article == null) {
-				error(writer, "该文章不存在");
-				return;
-			}
-			if (!App.isOwner && ((int) article.get("status") == 2)) {
-				error(writer, "您没有该文章的访问权限");
+				error(writer, "您没有该文章的访问权限或者该文章不存在");
 				return;
 			}
 			scope.setLocal("article", article);
