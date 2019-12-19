@@ -17,7 +17,7 @@ public class CategoriesDirective extends BaseDirective {
 	public void exec(Env env, Scope scope, Writer writer) {
 		int len = exprList.length();
 		if (len == 0) {
-			List categories = App.get("/categories", "categories", List.class);
+			List categories = App.get("/categories", "categories");
 			scope.setLocal("categories", categories);
 		} else {
 			error(writer, "#categories() 无需指定参数");

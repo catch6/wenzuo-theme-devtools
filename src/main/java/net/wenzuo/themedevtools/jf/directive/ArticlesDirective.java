@@ -6,12 +6,14 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import net.wenzuo.themedevtools.App;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Catch
  * @date 2019-10-14 15:31
  */
+@SuppressWarnings("unchecked")
 public class ArticlesDirective extends BaseDirective {
 	@Override
 	public void exec(Env env, Scope scope, Writer writer) {
@@ -26,7 +28,11 @@ public class ArticlesDirective extends BaseDirective {
 			Kv param = Kv.by("type", type)
 					.set("pageNumber", pageNumber)
 					.set("pageSize", pageSize);
-			Map page = App.get("/articles", param, "page", Map.class);
+			Map page = App.get("/articles", param, "page");
+//			List<Map> list= (List<Map>) page.get("list");
+//			for (Map map : list) {
+//				App.fixDateTime(map);
+//			}
 			scope.setLocal("page", page);
 		} else if (len == 4) {
 			String type = (String) exprList.getExpr(0).eval(scope);
@@ -37,7 +43,7 @@ public class ArticlesDirective extends BaseDirective {
 					.set("value", value)
 					.set("pageNumber", pageNumber)
 					.set("pageSize", pageSize);
-			Map page = App.get("/articles", param, "page", Map.class);
+			Map page = App.get("/articles", param, "page");
 			scope.setLocal("page", page);
 		} else {
 			error(writer, "#articles(type[,value],pageNumber,pageSize) 参数错误");

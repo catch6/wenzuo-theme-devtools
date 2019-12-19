@@ -39,6 +39,8 @@ public class JFConfig extends JFinalConfig {
 		me.setDevMode(true);
 		me.setToJdkEncoderFactory();
 		me.setDatePattern(Const.DATE_PATTERN);
+		me.removeDirective("date");
+		me.addDirective("date",DateDirective.class,true);
 		me.addDirective("hmr", HmrDirective.class, true);
 		me.addDirective("article", ArticleDirective.class, true);
 		me.addDirective("articles", ArticlesDirective.class, true);

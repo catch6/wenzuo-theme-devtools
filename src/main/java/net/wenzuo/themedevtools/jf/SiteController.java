@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.jfinal.core.Controller;
 import net.wenzuo.themedevtools.App;
 
+import java.util.Date;
+
 /**
  * @author Catch
  * @date 2018-06-11 14:06
@@ -32,6 +34,8 @@ public class SiteController extends Controller {
 
 		// 设置 assets 路径
 		setAttr(Const.ASSETS, StrUtil.EMPTY);
+
+		setAttr("d",new Date());
 
 		String view = attrs.length == 1 ? Const.INDEX : attrs[1];
 		view = view + Const.VIEW_SUFFIX;

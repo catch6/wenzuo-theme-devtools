@@ -17,7 +17,7 @@ public class TagsDirective extends BaseDirective {
 	public void exec(Env env, Scope scope, Writer writer) {
 		int len = exprList.length();
 		if (len == 0) {
-			List tags = App.get("/tags", "tags", List.class);
+			List tags = App.get("/tags", "tags");
 			scope.setLocal("tags", tags);
 		} else {
 			error(writer, "#tags() 无需指定参数");

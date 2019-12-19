@@ -18,7 +18,7 @@ public class MenusDirective extends BaseDirective {
 	public void exec(Env env, Scope scope, Writer writer) {
 		int len = exprList.length();
 		if (len == 0) {
-			List menus = App.get("/menus", "menus", List.class);
+			List menus = App.get("/menus", "menus");
 			scope.setLocal("menus", menus);
 		} else {
 			error(writer, "#menus() 无需指定参数");

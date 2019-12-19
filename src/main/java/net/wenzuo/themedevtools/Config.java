@@ -10,6 +10,7 @@ import com.jfinal.kit.StrKit;
 import com.jfinal.template.source.ClassPathSource;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * @author Catch
@@ -57,8 +58,7 @@ public class Config {
 			Kv.by("mobile", PropKit.get("mobile"))
 				.set("password", PropKit.get("password"))
 				.set("key", PropKit.get("key")),
-			"token",
-			String.class
+			"token"
 		);
 
 		// App.paraMap 在后续请求中将一直携带该参数
@@ -66,9 +66,12 @@ public class Config {
 		App.paraMap.put("key", key);
 		App.paraMap.put("forceVisitor", forceVisitor);
 
-		App.site = App.get("/site", "site", App.site.getClass());
-		App.visitor= App.get("/visitor", "visitor", App.visitor.getClass());
-		App.master= App.get("/master", "master", App.master.getClass());
+		App.site = App.get("/site", "site");
+
+		App.visitor= App.get("/visitor", "visitor");
+
+		App.master= App.get("/master", "master");
+
 		App.isMaster = App.master.get("id").equals(App.visitor.get("id"));
 		if (forceVisitor){
 			App.isMaster=false;

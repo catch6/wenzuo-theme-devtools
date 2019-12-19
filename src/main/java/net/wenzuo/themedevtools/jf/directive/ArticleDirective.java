@@ -12,6 +12,7 @@ import java.util.Map;
  * @author Catch
  * @date 2019-08-28 下午3:07
  */
+@SuppressWarnings("unchecked")
 public class ArticleDirective extends BaseDirective {
 
 	@Override
@@ -23,7 +24,7 @@ public class ArticleDirective extends BaseDirective {
 		} else if (len == 1) {
 			String para1 = (String) exprList.getExpr(0).eval(scope);
 			Map article = null;
-			article = App.get("/article", Kv.by("para", para1), "article", Map.class);
+			article = App.get("/article", Kv.by("para", para1), "article");
 			if (article == null) {
 				error(writer, "您没有该文章的访问权限或者该文章不存在");
 				return;
