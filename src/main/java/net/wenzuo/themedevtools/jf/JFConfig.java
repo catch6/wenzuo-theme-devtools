@@ -47,6 +47,7 @@ public class JFConfig extends JFinalConfig {
 		me.addDirective("categories", CategoriesDirective.class, true);
 		me.addDirective("tags", TagsDirective.class, true);
 		me.addDirective("menus", MenusDirective.class, true);
+		me.addDirective("PrevNext", PrevNextDirective.class, true);
 	}
 
 	@Override

@@ -29,10 +29,6 @@ public class ArticlesDirective extends BaseDirective {
 					.set("pageNumber", pageNumber)
 					.set("pageSize", pageSize);
 			Map page = App.get("/articles", param, "page");
-//			List<Map> list= (List<Map>) page.get("list");
-//			for (Map map : list) {
-//				App.fixDateTime(map);
-//			}
 			scope.setLocal("page", page);
 		} else if (len == 4) {
 			String type = (String) exprList.getExpr(0).eval(scope);
