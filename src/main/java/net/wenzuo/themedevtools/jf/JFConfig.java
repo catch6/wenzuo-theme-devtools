@@ -48,6 +48,9 @@ public class JFConfig extends JFinalConfig {
 		me.addDirective("tags", TagsDirective.class, true);
 		me.addDirective("menus", MenusDirective.class, true);
 		me.addDirective("PrevNext", PrevNextDirective.class, true);
+		me.removeDirective("random");
+		me.addDirective("random", RandomDirective.class, false);
+		me.addDirective("shuffle", ShuffleDirective.class, true);
 	}
 
 	@Override
