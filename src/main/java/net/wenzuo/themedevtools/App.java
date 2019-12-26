@@ -6,10 +6,8 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
-import com.jfinal.kit.Kv;
-import com.jfinal.kit.LogKit;
-import com.jfinal.kit.Prop;
-import com.jfinal.kit.PropKit;
+import com.jfinal.json.MixedJsonFactory;
+import com.jfinal.kit.*;
 import net.wenzuo.themedevtools.jf.Const;
 import net.wenzuo.themedevtools.jf.WenzuoServer;
 
@@ -52,10 +50,12 @@ public class App {
     /**
      * 抛出错误
      *
-     * @param obj api 返回的 body 直接转 JSONObject 的值
+     * @param ret api 返回的 body 直接转 Map 的值
      */
-    public static void error(JSONObject obj) {
-        String message = StrUtil.format("错误：code:{},msg:{}", obj.getInt("code"), obj.getStr("msg"));
+    public static void error(Map ret) {
+        int code= (int) ret.get("code");
+        String msg= (String) ret.get("msg");
+        String message = StrUtil.format("错误：code:{},msg:{}", code, msg);
         LogKit.error(message);
     }
 
@@ -74,12 +74,13 @@ public class App {
         }
         url=PropKit.get("serverUrl", "http://t.wenzuo.net:8000/api/devtools") + url;
         String body = HttpUtil.post(url, App.paraMap);
-        JSONObject obj = JSONUtil.parseObj(body);
-        if (obj.getInt("code") != 200) {
-            App.error(obj);
+        Map ret=JsonKit.parse(body,Map.class);
+        int code= (int) ret.get("code");
+        if (code!=200){
+            App.error(ret);
             System.exit(-1);
         }
-        T value = (T) obj.get(key);
+        T value= (T) ret.get(key);
         if (cache) {
             cacheMap.put(url, value);
         }
